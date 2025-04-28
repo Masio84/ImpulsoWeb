@@ -30,13 +30,14 @@
       font-family: 'Exo 2', sans-serif;
       background-color: var(--bg-color);
       color: var(--text-color);
-      transition: background-color 0.5s, color 0.5s;
+      transition: background-color 0.5s, color 0.5s, opacity 0.5s;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
+      opacity: 1;
     }
 
-    /* Contenedor de partículas (fondo interactivo) */
+    /* Contenedor de partículas */
     #particles-js {
       position: fixed;
       width: 100%;
@@ -54,7 +55,7 @@
       position: relative;
     }
 
-    /* Animación flotante para el logo */
+    /* Logo con animación flotante */
     header img {
       width: 350px;
       transition: width 0.5s;
@@ -66,9 +67,38 @@
       50% { transform: translateY(-12px); }
     }
 
+    /* Efecto Typewriter para reseñas */
+    #typewriter-quote {
+      font-size: 1.4rem;
+      color: var(--accent-color);
+      font-style: italic;
+      max-width: 80%;
+      margin: 1.5rem auto 0;
+      text-align: center;
+      min-height: 6rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1.5;
+    }
+
+    .typewriter-cursor {
+      border-right: 2px solid var(--accent-color);
+      animation: blinkCursor 0.7s infinite;
+    }
+
+    @keyframes blinkCursor {
+      from, to { opacity: 0; }
+      50% { opacity: 1; }
+    }
+
     @media (max-width: 600px) {
       header img {
         width: 220px;
+      }
+      #typewriter-quote {
+        font-size: 1.1rem;
+        min-height: 8rem;
       }
     }
 
@@ -246,15 +276,15 @@
 </head>
 <body>
 
-<!-- Contenedor de partículas interactivas -->
+<!-- Contenedor de partículas -->
 <div id="particles-js"></div>
 
 <div class="switch" onclick="toggleTheme()" aria-label="Cambiar tema claro/oscuro">Cambiar tema</div>
 
 <header>
   <img id="logo" src="FondoBlanco2.png" alt="Logo de ImpulsoWeb">
-  <h1>ImpulsoWeb</h1>
-  <p>Landing Studio</p>
+  <!-- Reseña motivacional con typewriter -->
+  <div id="typewriter-quote"></div>
 </header>
 
 <div class="separador"></div>
@@ -273,7 +303,9 @@
 <div class="separador"></div>
 
 <section class="contacto">
-  <form action="https://formsubmit.co/impulsoweb84@gmail.com" method="POST">
+  <!-- Formulario configurado para FormSubmit y redirección a Gracias.html -->
+  <form action="https://formsubmit.co/impulsoweb84@gmail.com" method="POST" target="_self">
+    <input type="hidden" name="_next" value="/Gracias.html"> <!-- Reemplaza con tu URL -->
     <input type="hidden" name="_captcha" value="false">
     <h2>Contáctanos</h2>
     <input type="text" name="name" placeholder="Tu nombre" required aria-label="Nombre">
@@ -296,114 +328,119 @@
 <div class="back-to-top" onclick="scrollToTop()" aria-label="Volver arriba">↑</div>
 
 <script>
-  // Configuración de partículas interactivas
-  document.addEventListener('DOMContentLoaded', function() {
-    particlesJS('particles-js', {
-      "particles": {
-        "number": {
-          "value": 70,
-          "density": {
-            "enable": true,
-            "value_area": 800
-          }
-        },
-        "color": {
-          "value": "#3b82f6" // Azul fijo
-        },
-        "shape": {
-          "type": "circle"
-        },
-        "opacity": {
-          "value": 0.7,
-          "random": true,
-          "anim": {
-            "enable": true,
-            "speed": 1,
-            "opacity_min": 0.3,
-            "sync": false
-          }
-        },
-        "size": {
-          "value": 4,
-          "random": true,
-          "anim": {
-            "enable": true,
-            "speed": 2,
-            "size_min": 1,
-            "sync": false
-          }
-        },
-        "line_linked": {
-          "enable": true,
-          "distance": 150,
-          "color": "#94a3b8",
-          "opacity": 0.5,
-          "width": 1
-        },
-        "move": {
-          "enable": true,
-          "speed": 2,
-          "direction": "none",
-          "random": true,
-          "straight": false,
-          "out_mode": "out",
-          "bounce": false,
-          "attract": {
-            "enable": true, // Atracción activada
-            "rotateX": 600,
-            "rotateY": 1200
-          }
-        }
-      },
-      "interactivity": {
-        "detect_on": "window", // Detección en toda la ventana
-        "events": {
-          "onhover": {
-            "enable": true, // Interacción al pasar el cursor
-            "mode": "grab" // Las partículas se acercan
-          },
-          "onclick": {
-            "enable": true, // Interacción al hacer clic
-            "mode": "push" // Añade partículas
-          },
-          "resize": true
-        },
-        "modes": {
-          "grab": {
-            "distance": 140,
-            "line_linked": {
-              "opacity": 0.8 // Líneas más visibles
-            }
-          },
-          "push": {
-            "particles_nb": 4 // Partículas añadidas al clic
-          }
-        }
-      },
-      "retina_detect": true
-    });
-  });
+  // ===== Reseñas Motivacionales Rotatorias (Orden Aleatorio) =====
+  const quotes = [
+    "En un mundo que cambia rápidamente, la innovación no es un lujo, es una necesidad. En ImpulsoWeb, transformamos tus ideas en experiencias digitales que cautivan a tus clientes y dejan atrás a la competencia. ¡El futuro de tu negocio comienza hoy!",
+    "En un mercado saturado, la confianza es tu mayor ventaja. Nos especializamos en diseñar plataformas que transmiten profesionalismo y credibilidad, para que tus clientes elijan siempre tu marca. ¡Diseñamos confianza, pixel a pixel!",
+    "Tu visión merece una plataforma a la altura. En ImpulsoWeb, no construimos páginas web; creamos escaleras digitales para que tu negocio alcance alturas inexploradas. ¡El éxito no tiene techo!",
+    "Los clientes no olvidan una experiencia excepcional. Diseñamos interfaces que no solo se usan, sino que se disfrutan. Convierte visitantes en embajadores de tu marca con un diseño que hable por ti.",
+    "El cambio es la única constante. En ImpulsoWeb, hacemos que tu presencia digital evolucione tan rápido como las tendencias del mercado, manteniéndote siempre relevante. ¡Adaptarse o quedar atrás nunca fue tan fácil!"
+  ];
 
-  // Tema oscuro persistente
-  if (localStorage.getItem('theme') === 'dark') {
-    document.documentElement.setAttribute('data-theme', 'dark');
-    document.getElementById('logo').src = 'FondoNegro2.png';
+  const quoteElement = document.getElementById('typewriter-quote');
+  let remainingQuotes = [...quotes]; // Copia del array para manejar las no mostradas
+
+  // Efecto Typewriter
+  function typewriter(element, text, speed = 30) {
+    let i = 0;
+    element.innerHTML = '';
+    const cursorSpan = document.createElement('span');
+    cursorSpan.className = 'typewriter-cursor';
+    element.appendChild(cursorSpan);
+
+    const typingInterval = setInterval(() => {
+      if (i < text.length) {
+        element.insertBefore(document.createTextNode(text[i]), cursorSpan);
+        i++;
+      } else {
+        clearInterval(typingInterval);
+        cursorSpan.style.display = 'none';
+      }
+    }, speed);
   }
 
-  function toggleTheme() {
-    const currentTheme = document.documentElement.getAttribute('data-theme');
-    if (currentTheme === 'dark') {
-      document.documentElement.removeAttribute('data-theme');
-      document.getElementById('logo').src = 'FondoBlanco2.png';
-      localStorage.setItem('theme', 'light');
-    } else {
+  // Seleccionar una reseña aleatoria sin repetir hasta mostrar todas
+  function getRandomQuote() {
+    if (remainingQuotes.length === 0) {
+      remainingQuotes = [...quotes]; // Reiniciar si ya se mostraron todas
+    }
+    const randomIndex = Math.floor(Math.random() * remainingQuotes.length);
+    const selectedQuote = remainingQuotes[randomIndex];
+    remainingQuotes.splice(randomIndex, 1); // Eliminar la reseña seleccionada
+    return selectedQuote;
+  }
+
+  // Rotación de reseñas cada 15 segundos (con orden aleatorio)
+  function rotateQuote() {
+    quoteElement.style.opacity = 0;
+    setTimeout(() => {
+      const nextQuote = getRandomQuote();
+      typewriter(quoteElement, nextQuote);
+      quoteElement.style.opacity = 1;
+    }, 500);
+  }
+
+  // Iniciar
+  typewriter(quoteElement, getRandomQuote()); // Primera reseña aleatoria
+  setInterval(rotateQuote, 15000); // Rotar cada 15 segundos
+
+  // ===== Tema oscuro/claro (con preferencia del sistema) =====
+  function applySystemThemePreference() {
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    if (prefersDark) {
       document.documentElement.setAttribute('data-theme', 'dark');
       document.getElementById('logo').src = 'FondoNegro2.png';
       localStorage.setItem('theme', 'dark');
     }
   }
 
-  // Botón "Volver arriba"
+  // Aplicar preferencia del sistema al cargar
+  applySystemThemePreference();
+
+  function toggleTheme() {
+    const currentTheme = document.documentElement.getAttribute('data-theme');
+    document.body.style.opacity = 0;
+    setTimeout(() => {
+      if (currentTheme === 'dark') {
+        document.documentElement.removeAttribute('data-theme');
+        document.getElementById('logo').src = 'FondoBlanco2.png';
+        localStorage.setItem('theme', 'light');
+      } else {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        document.getElementById('logo').src = 'FondoNegro2.png';
+        localStorage.setItem('theme', 'dark');
+      }
+      document.body.style.opacity = 1;
+    }, 500);
+  }
+
+  // ===== Partículas interactivas =====
+  document.addEventListener('DOMContentLoaded', function() {
+    particlesJS('particles-js', {
+      "particles": {
+        "number": { "value": 70, "density": { "enable": true, "value_area": 800 } },
+        "color": { "value": "#3b82f6" },
+        "shape": { "type": "circle" },
+        "opacity": { "value": 0.7, "random": true, "anim": { "enable": true, "speed": 1, "opacity_min": 0.3 } },
+        "size": { "value": 4, "random": true, "anim": { "enable": true, "speed": 2, "size_min": 1 } },
+        "line_linked": { "enable": true, "distance": 150, "color": "#94a3b8", "opacity": 0.5, "width": 1 },
+        "move": { "enable": true, "speed": 2, "attract": { "enable": true, "rotateX": 600, "rotateY": 1200 } }
+      },
+      "interactivity": {
+        "detect_on": "window",
+        "events": {
+          "onhover": { "enable": true, "mode": "grab" },
+          "onclick": { "enable": true, "mode": "push" }
+        },
+        "modes": {
+          "grab": { "distance": 140, "line_linked": { "opacity": 0.8 } },
+          "push": { "particles_nb": 4 }
+        }
+      }
+    });
+  });
+
+  // ===== Botón "Volver arriba" =====
   window.onscroll = function() {
     const backToTopButton = document.querySelector('.back-to-top');
     if (document.documentElement.scrollTop > 100) {
