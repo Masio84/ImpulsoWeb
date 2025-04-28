@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ImpulsoWeb - Landing Studio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Exo+2&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-color: #ffffff;
+      --text-color: #000000;
+      --border-color: #000000;
+      --detail-color: #cccccc;
+    }
+
+    [data-theme="dark"] {
+      --bg-color: #000000;
+      --text-color: #ffffff;
+      --border-color: #ffffff;
+      --detail-color: #777777;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Exo 2', sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      transition: background-color 0.5s, color 0.5s;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      text-align: center;
+      padding: 2rem;
+      animation: fadeInUp 1s ease both;
+    }
+
+    header img {
+      width: 350px;
+      transition: width 0.5s;
+    }
+
+    @media (max-width: 600px) {
+      header img {
+        width: 220px;
+      }
+    }
+
+    .separador {
+      border-top: 1px dotted var(--border-color);
+      margin: 2rem 0;
+    }
+
+    .switch {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      cursor: pointer;
+      background: var(--detail-color);
+      border: 1px dotted var(--border-color);
+      border-radius: 20px;
+      padding: 0.5rem 1rem;
+      font-size: 0.9rem;
+      user-select: none;
+      z-index: 1000;
+    }
+
+    .proyectos {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 2rem;
+      padding: 2rem;
+      animation: fadeInUp 1.5s ease both;
+    }
+
+    .proyecto {
+      border: 1px dotted var(--border-color);
+      padding: 1rem;
+      border-radius: 10px;
+      transition: transform 0.3s, box-shadow 0.3s;
+      overflow: hidden;
+      position: relative;
+    }
+
+    @media (hover: hover) {
+      .proyecto:hover {
+        transform: scale(1.05);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      }
+    }
+
+    .proyecto img {
+      width: 100%;
+      height: auto;
+      transition: opacity 0.3s;
+    }
+
+    .proyecto .descripcion {
+      margin-top: 1rem;
+      font-size: 1rem;
+    }
+
+    .proyecto .boton-ver {
+      margin-top: 1rem;
+      background-color: var(--detail-color);
+      color: var(--text-color);
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s, color 0.3s;
+      display: inline-block;
+    }
+
+    .proyecto .boton-ver:hover {
+      background-color: var(--border-color);
+      color: var(--bg-color);
+    }
+
+    .contacto {
+      display: flex;
+      flex-wrap: wrap;
+      padding: 2rem;
+      gap: 2rem;
+      animation: fadeInUp 2s ease both;
+    }
+
+    .contacto form, .datos-contacto {
+      flex: 1 1 45%;
+      min-width: 300px;
+      border: 1px dotted var(--border-color);
+      padding: 1.5rem;
+      border-radius: 10px;
+    }
+
+    input, textarea {
+      width: 100%;
+      margin-top: 1rem;
+      padding: 0.5rem;
+      border: 1px dotted var(--border-color);
+      background: var(--bg-color);
+      color: var(--text-color);
+      border-radius: 5px;
+    }
+
+    button {
+      margin-top: 1rem;
+      padding: 0.7rem 1.5rem;
+      background: var(--detail-color);
+      border: 1px dotted var(--border-color);
+      color: var(--text-color);
+      border-radius: 20px;
+      cursor: pointer;
+      transition: background 0.3s, color 0.3s;
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    button::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: var(--border-color);
+      transition: left 0.3s;
+      z-index: -1;
+      border-radius: 20px;
+    }
+
+    button:hover::after {
+      left: 0;
+    }
+
+    footer {
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.8rem;
+      border-top: 1px dotted var(--border-color);
+      margin-top: auto;
+    }
+
+    a {
+      color: var(--text-color);
+      text-decoration: none;
+      border-bottom: 1px dotted var(--border-color);
+    }
+
+    .back-to-top {
+      font-size: 16px;
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: var(--detail-color);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      cursor: pointer;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .back-to-top.visible {
+      opacity: 1;
+    }
+
+    @keyframes fadeInUp {
+      0% {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="switch" onclick="toggleTheme()" aria-label="Cambiar tema claro/oscuro">Cambiar tema</div>
+
+<header>
+  <img id="logo" src="FondoBlanco2.png" alt="Logo de ImpulsoWeb">
+  <h1>ImpulsoWeb</h1>
+  <p>Landing Studio</p>
+</header>
+
+<div class="separador"></div>
+
+<section class="proyectos">
+  <div class="proyecto">
+    <img src="Mini1.png" alt="Captura del portafolio de Jorge Eduardo Cuellar Piedra">
+    <div class="descripcion">
+      <h3>Portafolio de Jorge Eduardo Cuellar Piedra</h3>
+      <p>Un vistazo al trabajo y proyectos de Jorge, mostrando sus habilidades y experiencia en desarrollo web.</p>
+      <a href="https://masio84.github.io/Masio84/" class="boton-ver" target="_blank" aria-label="Ver portafolio">Ver Proyecto</a>
+    </div>
+  </div>
+</section>
+
+<div class="separador"></div>
+
+<section class="contacto">
+  <form action="https://formsubmit.co/impulsoweb84@gmail.com" method="POST">
+    <input type="hidden" name="_captcha" value="false">
+    <h2>Contáctanos</h2>
+    <input type="text" name="name" placeholder="Tu nombre" required aria-label="Nombre">
+    <input type="email" name="email" placeholder="Tu correo" required aria-label="Correo electrónico">
+    <textarea name="message" rows="5" placeholder="Tu mensaje" required aria-label="Mensaje"></textarea>
+    <button type="submit" aria-label="Enviar mensaje">Enviar</button>
+  </form>
+
+  <div class="datos-contacto">
+    <h2>Datos de contacto</h2>
+    <p><strong>WhatsApp:</strong> +52 (449) 344 7351</p>
+    <p><strong>Facebook:</strong> <a href="https://www.facebook.com/impulsoweb01" target="_blank" aria-label="Facebook de ImpulsoWeb">ImpulsoWeb01</a></p>
+  </div>
+</section>
+
+<footer>
+  &copy; 2025 ImpulsoWeb. Todos los derechos reservados.
+</footer>
+
+<div class="back-to-top" onclick="scrollToTop()" aria-label="Volver arriba">↑</div>
+
+<script>
+  // Tema oscuro persistente
+  if (localStorage.getItem('theme') === 'dark') {
+    document.documentElement.setAttribute('data-theme', 'dark');
+    document.getElementById('logo').src = 'FondoNegro2.png';
+  }
+
+  function toggleTheme() {
+    const currentTheme = document.documentElement.getAttribute('data-theme');
+    if (currentTheme === 'dark') {
+      document.documentElement.removeAttribute('data-theme');
+      document.getElementById('logo').src = 'FondoBlanco2.png';
+      localStorage.setItem('theme', 'light');
+    } else {
+      document.documentElement.setAttribute('data-theme', 'dark');
+      document.getElementById('logo').src = 'FondoNegro2.png';
+      localStorage.setItem('theme', 'dark');
+    }
+  }
+
+  // Botón "Volver arriba"
+  window.onscroll = function() {
+    const backToTopButton = document.querySelector('.back-to-top');
+    if (document.documentElement.scrollTop > 100) {
+      backToTopButton.classList.add('visible');
+    } else {
+      backToTopButton.classList.remove('visible');
+    }
+  };
+
+  function scrollToTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+
+</body>
+</html>
