@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ImpulsoWeb - Landing Studio</title>
   <link href="https://fonts.googleapis.com/css2?family=Exo+2&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
   <style>
     :root {
@@ -163,19 +164,23 @@
       font-size: 1rem;
     }
 
-    .boton-ver, button[type="submit"] {
+    /* Botones */
+    .boton-ver, .boton-enviar {
       margin-top: 1rem;
       background-color: var(--accent-color);
       color: white;
       border: none;
-      padding: 0.6rem 1.5rem;
+      padding: 0.7rem 1.5rem;
       border-radius: 5px;
       cursor: pointer;
       transition: background 0.3s, transform 0.2s;
       font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
     }
 
-    .boton-ver:hover, button[type="submit"]:hover {
+    .boton-ver:hover, .boton-enviar:hover {
       background-color: var(--border-color);
       transform: translateY(-2px);
     }
@@ -197,9 +202,12 @@
       background-color: var(--detail-color);
     }
 
+    .form-group {
+      margin-top: 1rem;
+    }
+
     input, textarea {
       width: 100%;
-      margin-top: 1rem;
       padding: 0.6rem;
       border: 1px dotted var(--border-color);
       background: var(--bg-color);
@@ -295,7 +303,9 @@
     <div class="descripcion">
       <h3>Portafolio de Jorge Eduardo Cuellar Piedra</h3>
       <p>Un vistazo al trabajo y proyectos de Jorge, mostrando sus habilidades y experiencia en desarrollo web.</p>
-      <a href="https://masio84.github.io/Masio84/" class="boton-ver" target="_blank" aria-label="Ver portafolio">Ver Proyecto</a>
+      <a href="https://masio84.github.io/Masio84/" class="boton-ver" target="_blank" aria-label="Ver portafolio">
+        <span>Ver Proyecto</span>
+      </a>
     </div>
   </div>
 </section>
@@ -303,15 +313,26 @@
 <div class="separador"></div>
 
 <section class="contacto">
-  <!-- Formulario configurado para FormSubmit y redirección a Gracias.html -->
-  <form action="https://formsubmit.co/impulsoweb84@gmail.com" method="POST" target="_self">
-    <input type="hidden" name="_next" value="https://masio84.github.io/ImpulsoWeb/Gracias.html"> <!-- Reemplaza con tu URL -->
+  <!-- Formulario de contacto actualizado -->
+  <form id="contact-form" action="https://formsubmit.co/impulsoweb84@gmail.com" method="POST" target="_self">
+    <input type="hidden" name="_next" value="https://masio84.github.io/ImpulsoWeb/Gracias.html">
+    <input type="hidden" name="_subject" value="Nuevo mensaje desde ImpulsoWeb">
     <input type="hidden" name="_captcha" value="false">
+    
     <h2>Contáctanos</h2>
-    <input type="text" name="name" placeholder="Tu nombre" required aria-label="Nombre">
-    <input type="email" name="email" placeholder="Tu correo" required aria-label="Correo electrónico">
-    <textarea name="message" rows="5" placeholder="Tu mensaje" required aria-label="Mensaje"></textarea>
-    <button type="submit" aria-label="Enviar mensaje">Enviar</button>
+    <div class="form-group">
+      <input type="text" name="name" placeholder="Nombre completo" required aria-label="Nombre">
+    </div>
+    <div class="form-group">
+      <input type="email" name="email" placeholder="Correo electrónico" required aria-label="Correo electrónico">
+    </div>
+    <div class="form-group">
+      <textarea name="message" placeholder="Tu mensaje" rows="5" required aria-label="Mensaje"></textarea>
+    </div>
+    <button type="submit" class="boton-enviar">
+      <span>Enviar Mensaje</span>
+      <i class="fas fa-paper-plane"></i>
+    </button>
   </form>
 
   <div class="datos-contacto">
@@ -338,7 +359,7 @@
   ];
 
   const quoteElement = document.getElementById('typewriter-quote');
-  let remainingQuotes = [...quotes]; // Copia del array para manejar las no mostradas
+  let remainingQuotes = [...quotes];
 
   // Efecto Typewriter
   function typewriter(element, text, speed = 30) {
@@ -359,43 +380,25 @@
     }, speed);
   }
 
-  // Seleccionar una reseña aleatoria sin repetir hasta mostrar todas
-  function getRandomQuote() {
-    if (remainingQuotes.length === 0) {
-      remainingQuotes = [...quotes]; // Reiniciar si ya se mostraron todas
-    }
-    const randomIndex = Math.floor(Math.random() * remainingQuotes.length);
-    const selectedQuote = remainingQuotes[randomIndex];
-    remainingQuotes.splice(randomIndex, 1); // Eliminar la reseña seleccionada
-    return selectedQuote;
-  }
-
-  // Rotación de reseñas cada 15 segundos (con orden aleatorio)
+  // Rotación de reseñas
   function rotateQuote() {
     quoteElement.style.opacity = 0;
     setTimeout(() => {
-      const nextQuote = getRandomQuote();
+      const nextQuote = quotes[Math.floor(Math.random() * quotes.length)];
       typewriter(quoteElement, nextQuote);
       quoteElement.style.opacity = 1;
     }, 500);
   }
 
   // Iniciar
-  typewriter(quoteElement, getRandomQuote()); // Primera reseña aleatoria
-  setInterval(rotateQuote, 15000); // Rotar cada 15 segundos
+  typewriter(quoteElement, quotes[0]);
+  setInterval(rotateQuote, 15000);
 
-  // ===== Tema oscuro/claro (con preferencia del sistema) =====
-  function applySystemThemePreference() {
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    if (prefersDark) {
-      document.documentElement.setAttribute('data-theme', 'dark');
-      document.getElementById('logo').src = 'FondoNegro2.png';
-      localStorage.setItem('theme', 'dark');
-    }
+  // ===== Tema oscuro/claro =====
+  if (localStorage.getItem('theme') === 'dark') {
+    document.documentElement.setAttribute('data-theme', 'dark');
+    document.getElementById('logo').src = 'FondoNegro2.png';
   }
-
-  // Aplicar preferencia del sistema al cargar
-  applySystemThemePreference();
 
   function toggleTheme() {
     const currentTheme = document.documentElement.getAttribute('data-theme');
