@@ -5,23 +5,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ImpulsoWeb - Landing Studio</title>
   <link href="https://fonts.googleapis.com/css2?family=Exo+2&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
   <style>
     :root {
       /* Tema claro (azules/grises) */
-      --bg-color: #f8fafc;          /* Blanco azulado muy suave */
-      --text-color: #1e293b;         /* Gris azulado oscuro */
-      --border-color: #94a3b8;       /* Gris azulado medio */
-      --detail-color: #e2e8f0;       /* Gris azulado claro */
-      --accent-color: #3b82f6;       /* Azul vibrante para detalles */
+      --bg-color: #f8fafc;
+      --text-color: #1e293b;
+      --border-color: #94a3b8;
+      --detail-color: #e2e8f0;
+      --accent-color: #3b82f6;
     }
 
     [data-theme="dark"] {
       /* Tema oscuro (One Dark Pro Darker) */
-      --bg-color: #21252b;           /* Fondo oscuro */
-      --text-color: #abb2bf;          /* Texto gris claro */
-      --border-color: #5c6370;        /* Borde gris */
-      --detail-color: #2c313a;        /* Gris oscuro para detalles */
-      --accent-color: #61afef;        /* Azul claro para acentos */
+      --bg-color: #21252b;
+      --text-color: #abb2bf;
+      --border-color: #5c6370;
+      --detail-color: #2c313a;
+      --accent-color: #61afef;
     }
 
     body {
@@ -35,15 +36,34 @@
       flex-direction: column;
     }
 
+    /* Contenedor de partículas (fondo interactivo) */
+    #particles-js {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      z-index: -1;
+      background-color: transparent !important;
+    }
+
     header {
       text-align: center;
       padding: 2rem;
       animation: fadeInUp 1s ease both;
+      position: relative;
     }
 
+    /* Animación flotante para el logo */
     header img {
       width: 350px;
       transition: width 0.5s;
+      animation: float 4s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-12px); }
     }
 
     @media (max-width: 600px) {
@@ -113,7 +133,6 @@
       font-size: 1rem;
     }
 
-    /* Estilo unificado para botones */
     .boton-ver, button[type="submit"] {
       margin-top: 1rem;
       background-color: var(--accent-color);
@@ -171,6 +190,7 @@
       border-top: 1px dotted var(--border-color);
       margin-top: auto;
       background-color: var(--detail-color);
+      position: relative;
     }
 
     a {
@@ -226,6 +246,9 @@
 </head>
 <body>
 
+<!-- Contenedor de partículas interactivas -->
+<div id="particles-js"></div>
+
 <div class="switch" onclick="toggleTheme()" aria-label="Cambiar tema claro/oscuro">Cambiar tema</div>
 
 <header>
@@ -273,6 +296,94 @@
 <div class="back-to-top" onclick="scrollToTop()" aria-label="Volver arriba">↑</div>
 
 <script>
+  // Configuración de partículas interactivas
+  document.addEventListener('DOMContentLoaded', function() {
+    particlesJS('particles-js', {
+      "particles": {
+        "number": {
+          "value": 70,
+          "density": {
+            "enable": true,
+            "value_area": 800
+          }
+        },
+        "color": {
+          "value": "#3b82f6" // Azul fijo
+        },
+        "shape": {
+          "type": "circle"
+        },
+        "opacity": {
+          "value": 0.7,
+          "random": true,
+          "anim": {
+            "enable": true,
+            "speed": 1,
+            "opacity_min": 0.3,
+            "sync": false
+          }
+        },
+        "size": {
+          "value": 4,
+          "random": true,
+          "anim": {
+            "enable": true,
+            "speed": 2,
+            "size_min": 1,
+            "sync": false
+          }
+        },
+        "line_linked": {
+          "enable": true,
+          "distance": 150,
+          "color": "#94a3b8",
+          "opacity": 0.5,
+          "width": 1
+        },
+        "move": {
+          "enable": true,
+          "speed": 2,
+          "direction": "none",
+          "random": true,
+          "straight": false,
+          "out_mode": "out",
+          "bounce": false,
+          "attract": {
+            "enable": true, // Atracción activada
+            "rotateX": 600,
+            "rotateY": 1200
+          }
+        }
+      },
+      "interactivity": {
+        "detect_on": "window", // Detección en toda la ventana
+        "events": {
+          "onhover": {
+            "enable": true, // Interacción al pasar el cursor
+            "mode": "grab" // Las partículas se acercan
+          },
+          "onclick": {
+            "enable": true, // Interacción al hacer clic
+            "mode": "push" // Añade partículas
+          },
+          "resize": true
+        },
+        "modes": {
+          "grab": {
+            "distance": 140,
+            "line_linked": {
+              "opacity": 0.8 // Líneas más visibles
+            }
+          },
+          "push": {
+            "particles_nb": 4 // Partículas añadidas al clic
+          }
+        }
+      },
+      "retina_detect": true
+    });
+  });
+
   // Tema oscuro persistente
   if (localStorage.getItem('theme') === 'dark') {
     document.documentElement.setAttribute('data-theme', 'dark');
