@@ -185,6 +185,72 @@
       transform: translateY(-2px);
     }
 
+    /* Banner de cotización actualizado */
+    .cotizacion-banner {
+      background: linear-gradient(135deg, var(--accent-color), #2563eb);
+      padding: 3rem 2rem;
+      text-align: center;
+      color: white;
+      margin: 2rem;
+      border-radius: 10px;
+      animation: fadeInUp 1s ease both;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 25px rgba(59, 130, 246, 0.3);
+    }
+
+    .cotizacion-banner::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+      transform: rotate(30deg);
+      z-index: 0;
+    }
+
+    .cotizacion-banner h2 {
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+      position: relative;
+      z-index: 1;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+
+    .cotizacion-banner p {
+      font-size: 1.2rem;
+      max-width: 800px;
+      margin: 0 auto 2rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .boton-whatsapp {
+      background-color: #25D366;
+      color: white;
+      font-size: 1.1rem;
+      padding: 0.8rem 2rem;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: transform 0.3s, box-shadow 0.3s;
+      position: relative;
+      z-index: 1;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .boton-whatsapp:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      background-color: #128C7E;
+    }
+
     .contacto {
       display: flex;
       flex-wrap: wrap;
@@ -206,7 +272,7 @@
       margin-top: 1rem;
     }
 
-    input, textarea {
+    input, textarea, select {
       width: 100%;
       padding: 0.6rem;
       border: 1px dotted var(--border-color);
@@ -216,7 +282,7 @@
       transition: border 0.3s;
     }
 
-    input:focus, textarea:focus {
+    input:focus, textarea:focus, select:focus {
       border-color: var(--accent-color);
       outline: none;
     }
@@ -310,11 +376,20 @@
   </div>
 </section>
 
+<!-- Banner de cotización destacado actualizado (ahora después de proyectos) -->
+<section class="cotizacion-banner">
+  <h2>¿Listo para impulsar tu presencia digital?</h2>
+  <p>¡Cotización express con solo un clic! (Prometemos no enviarte memes... a menos que lo pidas) 😉</p>
+  <a href="https://wa.me/524493447351?text=¿Me%20pueden%20proporcionar%20una%20cotización?" class="boton-whatsapp" target="_blank">
+    <i class="fab fa-whatsapp"></i> Pedir Cotización
+  </a>
+</section>
+
 <div class="separador"></div>
 
 <section class="contacto">
-  <!-- Formulario de contacto actualizado -->
-  <form id="contact-form" action="https://formsubmit.co/impulsoweb84@gmail.com" method="POST" target="_self">
+  <!-- Formulario de contacto mejorado -->
+  <form id="contacto-cotizacion" action="https://formsubmit.co/impulsoweb84@gmail.com" method="POST" target="_self">
     <input type="hidden" name="_next" value="https://masio84.github.io/ImpulsoWeb/Gracias.html">
     <input type="hidden" name="_subject" value="Nuevo mensaje desde ImpulsoWeb">
     <input type="hidden" name="_captcha" value="false">
@@ -327,18 +402,40 @@
       <input type="email" name="email" placeholder="Correo electrónico" required aria-label="Correo electrónico">
     </div>
     <div class="form-group">
-      <textarea name="message" placeholder="Tu mensaje" rows="5" required aria-label="Mensaje"></textarea>
+      <input type="tel" name="phone" placeholder="WhatsApp (para responder más rápido)" aria-label="Teléfono">
+    </div>
+    <div class="form-group">
+      <select name="service" required aria-label="Tipo de servicio">
+        <option value="">¿Qué servicio necesitas?</option>
+        <option value="web">Página Web</option>
+        <option value="redesign">Rediseño Web</option>
+        <option value="ecommerce">Tienda Online</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <textarea name="message" placeholder="Cuéntanos sobre tu proyecto (si tienes ideas locas, nos encantan)" rows="5" required aria-label="Mensaje"></textarea>
     </div>
     <button type="submit" class="boton-enviar">
-      <span>Enviar Mensaje</span>
+      <span>Enviar Solicitud</span>
       <i class="fas fa-paper-plane"></i>
     </button>
   </form>
 
+  <!-- Sección de datos de contacto actualizada -->
   <div class="datos-contacto">
-    <h2>Datos de contacto</h2>
-    <p><strong>WhatsApp:</strong> +52 (449) 344 7351</p>
+    <h2>¿Dónde encontrarnos?</h2>
+    <p><strong>WhatsApp:</strong> <a href="https://wa.me/524493447351" target="_blank">+52 (449) 344 7351</a></p>
     <p><strong>Facebook:</strong> <a href="https://www.facebook.com/impulsoweb01" target="_blank" aria-label="Facebook de ImpulsoWeb">ImpulsoWeb01</a></p>
+    
+    <div style="margin-top: 2rem; padding: 1rem; background-color: rgba(59, 130, 246, 0.1); border-radius: 5px;">
+      <h3 style="margin-top: 0; color: var(--accent-color);">Horario de atención:</h3>
+      <p>24/7 (Sí, incluso si es domingo a las 3 AM... aunque no prometemos estar muy coherentes a esa hora) 🌙☕</p>
+      
+      <div style="margin-top: 1.5rem; padding: 1rem; background-color: rgba(37, 211, 102, 0.1); border-radius: 5px; border-left: 4px solid #25D366;">
+        <h4 style="margin-top: 0; color: #25D366;">¿Sabías que?</h4>
+        <p>El 80% de nuestros clientes nos contactan fuera de horario laboral... ¡y el 100% obtiene respuesta! (Aunque a veces sea con un "😴" de nuestra parte)</p>
+      </div>
+    </div>
   </div>
 </section>
 
